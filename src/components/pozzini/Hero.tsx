@@ -1,13 +1,17 @@
 import { useEffect, useRef } from "react";
-import heroImage from "@/assets/hero-pozzini.jpg";
 import { SearchForm } from "./SearchForm";
 
+const HERO_VIDEO_URL = "https://pozzyni.vercel.app/hero-video.mp4";
+
 export function Hero() {
-  const imgRef = useRef<HTMLImageElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion) {
+      videoRef.current?.pause();
+      return;
+    }
 
     let ticking = false;
     const onScroll = () => {
@@ -15,8 +19,8 @@ export function Hero() {
       ticking = true;
       requestAnimationFrame(() => {
         const offset = Math.min(window.scrollY * 0.15, 80);
-        if (imgRef.current) {
-          imgRef.current.style.transform = `scale(1.08) translateY(${offset}px)`;
+        if (videoRef.current) {
+          videoRef.current.style.transform = `scale(1.08) translateY(${offset}px)`;
         }
         ticking = false;
       });
@@ -28,13 +32,15 @@ export function Hero() {
   return (
     <section id="topo" className="relative overflow-hidden bg-primary">
       <div className="absolute inset-0">
-        <img
-          ref={imgRef}
-          src={heroImage}
-          alt="Casa contemporânea iluminada ao entardecer com piscina de borda infinita"
-          width={1920}
-          height={1088}
-          fetchPriority="high"
+        <video
+          ref={videoRef}
+          src={HERO_VIDEO_URL}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden="true"
           className="h-full w-full scale-[1.08] object-cover will-change-transform"
         />
         <div
