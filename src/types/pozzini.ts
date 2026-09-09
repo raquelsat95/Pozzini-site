@@ -25,13 +25,23 @@ export interface Property {
   imageAlt: string;
 }
 
+export type SearchBusiness = "comprar" | "alugar" | "lancamento";
+
+export type SearchPropertyType =
+  | "casa"
+  | "apartamento"
+  | "sala_comercial"
+  | "lote_terreno"
+  | "studio"
+  | "casa_condominio"
+  | "imovel_comercial";
+
 export interface SearchFilters {
-  purpose: Purpose;
-  type: PropertyType | "todos";
-  location: string;
-  priceMin: string;
+  business: SearchBusiness;
+  type: SearchPropertyType | "";
+  city: string;
+  neighborhood: string;
   priceMax: string;
-  bedrooms: "" | "1" | "2" | "3" | "4";
 }
 
 export interface LeadFormData {

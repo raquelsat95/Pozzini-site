@@ -1,5 +1,5 @@
 import { Instagram, Facebook, BadgeCheck } from "lucide-react";
-import brokerAsset from "@/assets/corretor.jpg.asset.json";
+import corretorPhoto from "@/assets/corretor-foto.jpg";
 import { broker } from "@/data/broker";
 
 const columns = [
@@ -33,12 +33,12 @@ const columns = [
 
 const socialLinks = [
   {
-    label: "Instagram da Pozzini",
+    label: "Instagram da Pozziny",
     href: "https://www.instagram.com/pozziny.associado",
     icon: Instagram,
   },
   {
-    label: "Facebook da Pozzini",
+    label: "Facebook da Pozziny",
     href: "https://www.facebook.com/profile.php?id=61557336878264",
     icon: Facebook,
   },
@@ -50,17 +50,15 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="min-w-0">
-            <p className="font-display text-2xl font-bold">
-              Pozzini<span className="text-gold">.</span>
-            </p>
-            <p className="mt-4 max-w-xs text-sm text-primary-foreground/70">
+            <p className="font-display text-xl font-normal tracking-[0.3em]">POZZINY</p>
+            <p className="mt-4 max-w-xs text-sm text-primary-foreground/55">
               Imobiliária dedicada a conectar pessoas aos imóveis certos, com curadoria,
               transparência e atendimento próximo.
             </p>
             <div className="mt-6 flex items-center gap-3">
               <img
-                src={brokerAsset.url}
-                alt="Foto do corretor responsável pela Pozzini"
+                src={corretorPhoto}
+                alt="Foto do corretor responsável pela Pozziny"
                 loading="lazy"
                 width={96}
                 height={96}
@@ -68,7 +66,7 @@ export function Footer() {
               />
               <div className="min-w-0">
                 <p className="truncate text-sm font-semibold">{broker.name}</p>
-                <p className="mt-0.5 inline-flex items-center gap-1.5 text-xs text-primary-foreground/70">
+                <p className="mt-0.5 inline-flex items-center gap-1.5 text-xs text-primary-foreground/55">
                   <BadgeCheck className="size-3.5 text-gold" aria-hidden="true" />
                   CRECI {broker.creci} • CONSULTORIA IMOBILIÁRIA
                 </p>
@@ -102,7 +100,7 @@ export function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-sm text-primary-foreground/70 transition-colors hover:text-gold"
+                      className="text-sm text-primary-foreground/55 transition-colors hover:text-gold"
                     >
                       {link.label}
                     </a>
@@ -113,8 +111,8 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-primary-foreground/15 pt-6 text-xs text-primary-foreground/60 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Pozzini. Todos os direitos reservados.</p>
+        <div className="mt-12 flex flex-col gap-3 border-t border-primary-foreground/15 pt-6 text-xs text-primary-foreground/55 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Pozziny. Todos os direitos reservados.</p>
           <div className="flex gap-5">
             <a href="#contato" className="transition-colors hover:text-gold">
               Política de privacidade

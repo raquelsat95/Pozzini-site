@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
+import logo from "@/assets/pozziny-logo.png";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -26,20 +27,19 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled || open ? "bg-background/95 shadow-soft backdrop-blur" : "bg-transparent",
+        "fixed inset-x-0 top-0 z-50 text-primary-foreground transition-all duration-300",
+        scrolled || open
+          ? "border-b border-primary-foreground/10 bg-primary/88 backdrop-blur-xl"
+          : "border-b border-transparent bg-transparent",
       )}
     >
-      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <a
-          href="#topo"
-          className={cn(
-            "min-w-0 font-display text-2xl font-bold tracking-tight transition-colors",
-            scrolled || open ? "text-foreground" : "text-primary-foreground",
-          )}
-        >
-          Pozzini
-          <span className="text-gold">.</span>
+      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
+        <a href="#topo" aria-label="Pozziny Silva Consultoria Imobiliária" className="min-w-0">
+          <img
+            src={logo}
+            alt="Pozziny Silva Consultoria Imobiliária"
+            className="h-12 w-auto animate-letter-in object-contain opacity-0 sm:h-14"
+          />
         </a>
 
         <nav aria-label="Principal" className="hidden items-center gap-8 lg:flex">
@@ -47,12 +47,10 @@ export function Header() {
             <a
               key={item.label}
               href={item.href}
-              className={cn(
-                "text-sm font-medium transition-colors hover:text-gold",
-                scrolled ? "text-foreground" : "text-primary-foreground/90",
-              )}
+              className="group relative py-1 text-sm font-medium text-primary-foreground/80 transition-colors hover:text-gold"
             >
               {item.label}
+              <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-gold transition-transform duration-300 ease-out group-hover:scale-x-100" />
             </a>
           ))}
           <Button variant="gold" size="default" asChild>
@@ -61,12 +59,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2 lg:hidden">
-          <Button
-            variant={scrolled || open ? "outline" : "onDark"}
-            size="icon"
-            asChild
-            aria-label="Falar com a Pozzini"
-          >
+          <Button variant="onDark" size="icon" asChild aria-label="Falar com a Pozziny">
             <a href="#contato">
               <Phone />
             </a>
@@ -77,12 +70,7 @@ export function Header() {
             aria-expanded={open}
             aria-controls="menu-mobile"
             aria-label={open ? "Fechar menu" : "Abrir menu"}
-            className={cn(
-              "inline-flex h-10 w-10 items-center justify-center rounded-md border transition-colors",
-              scrolled || open
-                ? "border-border text-foreground"
-                : "border-primary-foreground/40 text-primary-foreground",
-            )}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-primary-foreground/30 text-primary-foreground transition-colors"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -93,7 +81,7 @@ export function Header() {
         <nav
           id="menu-mobile"
           aria-label="Menu mobile"
-          className="border-t border-border bg-background lg:hidden"
+          className="border-t border-primary-foreground/10 bg-primary/95 backdrop-blur-xl lg:hidden"
         >
           <ul className="mx-auto max-w-7xl px-4 py-2 sm:px-6">
             {navItems.map((item) => (
@@ -101,7 +89,7 @@ export function Header() {
                 <a
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="block border-b border-border/60 py-4 text-base font-medium text-foreground transition-colors hover:text-gold"
+                  className="block border-b border-primary-foreground/10 py-4 text-base font-medium text-primary-foreground/90 transition-colors hover:text-gold"
                 >
                   {item.label}
                 </a>

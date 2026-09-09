@@ -5,19 +5,19 @@ const testimonials = [
   {
     quote:
       "O atendimento foi muito próximo do começo ao fim. Recebemos apenas opções que faziam sentido para a nossa família e cada etapa foi explicada com calma.",
-    name: "Cliente Pozzini",
+    name: "Cliente Pozziny",
     context: "Compra de casa",
   },
   {
     quote:
       "Alugamos nosso apartamento com tranquilidade: documentação organizada, comunicação clara e nenhuma surpresa durante a negociação.",
-    name: "Cliente Pozzini",
+    name: "Cliente Pozziny",
     context: "Locação",
   },
   {
     quote:
       "Procurava um imóvel para investir e recebi uma leitura honesta sobre potencial e riscos. Isso fez toda a diferença na decisão.",
-    name: "Cliente Pozzini",
+    name: "Cliente Pozziny",
     context: "Investimento",
   },
 ];

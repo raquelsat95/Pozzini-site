@@ -8,7 +8,7 @@ export function CTASection() {
           Está pensando em vender ou alugar seu imóvel?
         </h2>
         <p className="mt-4 text-base text-primary-foreground/80">
-          Fale com a Pozzini e descubra como podemos ajudar a valorizar e apresentar seu imóvel da
+          Fale com a Pozziny e descubra como podemos ajudar a valorizar e apresentar seu imóvel da
           melhor forma.
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">

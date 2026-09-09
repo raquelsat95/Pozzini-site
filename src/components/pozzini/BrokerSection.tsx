@@ -1,10 +1,7 @@
-import { Instagram, Facebook, BadgeCheck } from "lucide-react";
+import { BadgeCheck } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import { cn } from "@/lib/utils";
-import { broker, socialLinks as brokerSocials } from "@/data/broker";
-
-const icons = [Instagram, Facebook];
-const socialLinks = brokerSocials.map((link, index) => ({ ...link, icon: icons[index]! }));
+import { broker } from "@/data/broker";
 
 export function BrokerSection() {
   const { ref, visible } = useReveal<HTMLElement>();
@@ -22,22 +19,6 @@ export function BrokerSection() {
               <BadgeCheck className="size-4 text-gold" aria-hidden="true" />
               CRECI {broker.creci} • CONSULTORIA IMOBILIÁRIA
             </p>
-
-            <ul className="mt-6 flex gap-3">
-              {socialLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    aria-label={link.label}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-foreground/15 text-foreground transition-colors hover:border-gold hover:text-gold"
-                  >
-                    <link.icon className="size-4" />
-                  </a>
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div className="min-w-0 text-center lg:text-left">
@@ -52,7 +33,7 @@ export function BrokerSection() {
               tempo.
             </p>
             <p className="mt-4 text-base text-muted-foreground">
-              Quer comprar, alugar, vender ou investir? Fale com a Pozzini e tenha à disposição um
+              Quer comprar, alugar, vender ou investir? Fale com a Pozziny e tenha à disposição um
               atendimento dedicado para tornar sua experiência imobiliária mais tranquila e
               eficiente.
             </p>

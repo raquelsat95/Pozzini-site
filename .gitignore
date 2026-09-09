@@ -20,6 +20,17 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# Secrets / environment variables
+.env
+.env.*
+!.env.example
+
+# npm lockfile (project uses bun.lock)
+package-lock.json
+
+# Vercel
+.vercel
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -19,11 +19,11 @@ export const broker: Broker = {
 
 export const socialLinks = [
   {
-    label: "Instagram da Pozzini",
+    label: "Instagram da Pozziny",
     href: "https://www.instagram.com/pozziny.associado",
   },
   {
-    label: "Facebook da Pozzini",
+    label: "Facebook da Pozziny",
     href: "https://www.facebook.com/profile.php?id=61557336878264",
   },
 ] as const;

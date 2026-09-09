@@ -8,13 +8,13 @@ export function FeaturedProperties() {
   return (
     <Section
       id="imoveis"
-      eyebrow="Seleção Pozzini"
+      eyebrow="Seleção Pozziny"
       title="Imóveis em destaque"
       subtitle="Uma seleção de imóveis escolhidos para você."
     >
       {properties.length === 0 ? (
         <p className="text-center text-muted-foreground">
-          Nenhum imóvel disponível no momento. Fale com a Pozzini para receber opções.
+          Nenhum imóvel disponível no momento. Fale com a Pozziny para receber opções.
         </p>
       ) : (
         <>
@@ -25,7 +25,7 @@ export function FeaturedProperties() {
           </div>
           <p className="mt-6 text-center text-xs text-muted-foreground">
             Imóveis exibidos apenas como exemplo de apresentação, até a conexão com a carteira real
-            de imóveis da Pozzini.
+            de imóveis da Pozziny.
           </p>
         </>
       )}

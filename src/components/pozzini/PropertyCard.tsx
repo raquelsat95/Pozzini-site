@@ -9,7 +9,7 @@ export function PropertyCard({ property }: { property: Property }) {
   const [favorite, setFavorite] = useState(false);
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-soft transition-shadow duration-300 hover:shadow-card">
+    <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-soft transition-[transform,box-shadow] duration-300 hover:-translate-y-2.5 hover:shadow-card">
       <div className="relative aspect-4/3 overflow-hidden">
         <img
           src={property.image}
@@ -17,10 +17,10 @@ export function PropertyCard({ property }: { property: Property }) {
           loading="lazy"
           width={1200}
           height={900}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
         />
         {property.featured && (
-          <span className="absolute top-3 left-3 rounded-full bg-gold px-3 py-1 text-xs font-semibold text-gold-foreground">
+          <span className="absolute top-3 left-3 rounded-full bg-gold-dark px-3 py-1 text-xs font-semibold text-white">
             Destaque
           </span>
         )}

@@ -51,13 +51,15 @@ export function ContactSection() {
     }
 
     setStatus("loading");
-    console.log("[PozziniContactForm]", "envio solicitado", { ...data, message: "[omitido]" });
+    if (import.meta.env.DEV) {
+      console.log("[PozzinyContactForm]", "envio solicitado", { ...data, message: "[omitido]" });
+    }
     try {
       // Sem backend conectado ainda: estrutura pronta para envio real futuro.
       await new Promise((resolve) => setTimeout(resolve, 600));
       setStatus("success");
     } catch (err) {
-      console.log("[PozziniContactForm]", "erro no envio", err);
+      console.log("[PozzinyContactForm]", "erro no envio", err);
       setStatus("error");
     }
   }
@@ -75,7 +77,7 @@ export function ContactSection() {
             Vamos encontrar a melhor oportunidade para você.
           </h2>
           <p className="mt-5 text-base text-muted-foreground">
-            Conte o que você procura. Um consultor da Pozzini entra em contato para entender seu
+            Conte o que você procura. Um consultor da Pozziny entra em contato para entender seu
             momento e apresentar as opções mais adequadas.
           </p>
         </div>
@@ -83,7 +85,7 @@ export function ContactSection() {
         <form
           onSubmit={handleSubmit}
           noValidate
-          aria-label="Fale com a Pozzini"
+          aria-label="Fale com a Pozziny"
           className="rounded-xl border border-border bg-card p-5 shadow-card sm:p-7"
         >
           <div className="grid gap-5">
@@ -181,7 +183,7 @@ export function ContactSection() {
 
             <Button type="submit" variant="gold" size="xl" disabled={status === "loading"}>
               {status === "loading" && <Loader2 className="animate-spin" />}
-              {status === "loading" ? "Enviando..." : "Quero falar com a Pozzini"}
+              {status === "loading" ? "Enviando..." : "Quero falar com a Pozziny"}
             </Button>
 
             <div aria-live="polite" className="text-sm">

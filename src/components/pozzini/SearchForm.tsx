@@ -1,32 +1,62 @@
 import { useState, type FormEvent } from "react";
-import { Search, MapPin, Home, BedDouble, Loader2 } from "lucide-react";
+import { Search, Tag, Home, MapPin, Building2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { SearchFilters } from "@/types/pozzini";
 
+const businessOptions = [
+  { value: "comprar", label: "Comprar" },
+  { value: "alugar", label: "Alugar" },
+  { value: "lancamento", label: "Lançamento" },
+] as const;
+
 const propertyTypes = [
-  { value: "todos", label: "Todos os tipos" },
   { value: "casa", label: "Casa" },
   { value: "apartamento", label: "Apartamento" },
-  { value: "cobertura", label: "Cobertura" },
-  { value: "terreno", label: "Terreno" },
-  { value: "comercial", label: "Comercial" },
-  { value: "condominio", label: "Condomínio" },
-  { value: "outros", label: "Outros" },
+  { value: "sala_comercial", label: "Sala Comercial" },
+  { value: "lote_terreno", label: "Lote/Terreno" },
+  { value: "studio", label: "Studio" },
+  { value: "casa_condominio", label: "Casa de Condomínio" },
+  { value: "imovel_comercial", label: "Imóvel Comercial" },
+] as const;
+
+const cities = ["São Paulo", "Centro", "Ipiranga", "Sacomã"] as const;
+
+const neighborhoods = [
+  "Centro",
+  "Ipiranga",
+  "Sacomã",
+  "Vila Mariana",
+  "Cambuci",
+  "Liberdade",
+  "Aclimação",
+  "Vila Prudente",
+  "Cursino",
+  "Saúde",
+  "Bosque da Saúde",
+  "Jabaquara",
+  "Vila Guarani",
+  "Moóca",
+  "Água Rasa",
 ] as const;
 
 const initialFilters: SearchFilters = {
-  purpose: "comprar",
-  type: "todos",
-  location: "",
-  priceMin: "",
+  business: "comprar",
+  type: "",
+  city: "",
+  neighborhood: "",
   priceMax: "",
-  bedrooms: "",
 };
 
-const selectClass =
-  "h-11 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+const selectTriggerClass = "h-11 w-full";
 
 export function SearchForm() {
   const [filters, setFilters] = useState<SearchFilters>(initialFilters);
@@ -42,32 +72,25 @@ export function SearchForm() {
     setError(null);
     setMessage(null);
 
-    const min = Number(filters.priceMin);
     const max = Number(filters.priceMax);
-    if (filters.priceMin && (Number.isNaN(min) || min < 0)) {
-      setError("Informe um valor mínimo válido.");
-      return;
-    }
     if (filters.priceMax && (Number.isNaN(max) || max < 0)) {
-      setError("Informe um valor máximo válido.");
-      return;
-    }
-    if (filters.priceMin && filters.priceMax && min > max) {
-      setError("O valor mínimo não pode ser maior que o valor máximo.");
+      setError("Informe um preço máximo válido.");
       return;
     }
 
     setLoading(true);
-    console.log("[PozziniSearchForm]", "busca solicitada", filters);
+    if (import.meta.env.DEV) {
+      console.log("[PozzinySearchForm]", "busca solicitada", filters);
+    }
     try {
       // Ainda não há backend de imóveis conectado. A estrutura abaixo está
       // pronta para receber a chamada real (server function ou API) no futuro.
       await new Promise((resolve) => setTimeout(resolve, 500));
       setMessage(
-        "Recebemos seus critérios. A busca completa de imóveis será ativada em breve — fale com a Pozzini para receber opções agora.",
+        "Recebemos seus critérios. A busca completa de imóveis será ativada em breve — fale com a Pozziny para receber opções agora.",
       );
     } catch (err) {
-      console.log("[PozziniSearchForm]", "erro na busca", err);
+      console.log("[PozzinySearchForm]", "erro na busca", err);
       setError("Não foi possível realizar a busca agora. Tente novamente em instantes.");
     } finally {
       setLoading(false);
@@ -81,98 +104,103 @@ export function SearchForm() {
       aria-label="Buscar imóveis"
       className="w-full rounded-xl border border-border/70 bg-card p-4 shadow-card sm:p-6"
     >
-      <div
-        role="group"
-        aria-label="Finalidade"
-        className="mb-5 inline-flex rounded-md bg-muted p-1"
-      >
-        {(["comprar", "alugar"] as const).map((purpose) => (
-          <button
-            key={purpose}
-            type="button"
-            aria-pressed={filters.purpose === purpose}
-            onClick={() => update("purpose", purpose)}
-            className={`h-9 rounded-md px-5 text-sm font-semibold capitalize transition-colors ${
-              filters.purpose === purpose
-                ? "bg-primary text-primary-foreground shadow-soft"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="min-w-0">
+          <Label htmlFor="negocio" className="mb-1.5 flex items-center gap-1.5 text-xs">
+            <Tag className="size-3.5 text-muted-foreground" aria-hidden="true" /> Negócio
+          </Label>
+          <Select
+            value={filters.business}
+            onValueChange={(value) => update("business", value as SearchFilters["business"])}
           >
-            {purpose}
-          </button>
-        ))}
-      </div>
+            <SelectTrigger id="negocio" className={selectTriggerClass}>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent side="bottom" avoidCollisions={false}>
+              {businessOptions.map((b) => (
+                <SelectItem key={b.value} value={b.value}>
+                  {b.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-      <div className="grid gap-4 lg:grid-cols-[1.1fr_1.3fr_1fr_0.9fr]">
         <div className="min-w-0">
           <Label htmlFor="tipo" className="mb-1.5 flex items-center gap-1.5 text-xs">
-            <Home className="size-3.5 text-muted-foreground" aria-hidden="true" /> Tipo de imóvel
+            <Home className="size-3.5 text-muted-foreground" aria-hidden="true" /> Tipo
           </Label>
-          <select
-            id="tipo"
-            className={selectClass}
-            value={filters.type}
-            onChange={(e) => update("type", e.target.value as SearchFilters["type"])}
+          <Select
+            value={filters.type || "todos"}
+            onValueChange={(value) =>
+              update("type", (value === "todos" ? "" : value) as SearchFilters["type"])
+            }
           >
-            {propertyTypes.map((t) => (
-              <option key={t.value} value={t.value}>
-                {t.label}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger id="tipo" className={selectTriggerClass}>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent side="bottom" avoidCollisions={false}>
+              <SelectItem value="todos">Todos os tipos</SelectItem>
+              {propertyTypes.map((t) => (
+                <SelectItem key={t.value} value={t.value}>
+                  {t.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="min-w-0">
-          <Label htmlFor="local" className="mb-1.5 flex items-center gap-1.5 text-xs">
-            <MapPin className="size-3.5 text-muted-foreground" aria-hidden="true" /> Localização
+          <Label htmlFor="cidade" className="mb-1.5 flex items-center gap-1.5 text-xs">
+            <MapPin className="size-3.5 text-muted-foreground" aria-hidden="true" /> Cidade
+          </Label>
+          <Select value={filters.city} onValueChange={(value) => update("city", value)}>
+            <SelectTrigger id="cidade" className={selectTriggerClass}>
+              <SelectValue placeholder="Selecione" />
+            </SelectTrigger>
+            <SelectContent side="bottom" avoidCollisions={false}>
+              {cities.map((c) => (
+                <SelectItem key={c} value={c}>
+                  {c}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="min-w-0">
+          <Label htmlFor="bairro" className="mb-1.5 flex items-center gap-1.5 text-xs">
+            <Building2 className="size-3.5 text-muted-foreground" aria-hidden="true" /> Bairro
+          </Label>
+          <Select
+            value={filters.neighborhood}
+            onValueChange={(value) => update("neighborhood", value)}
+          >
+            <SelectTrigger id="bairro" className={selectTriggerClass}>
+              <SelectValue placeholder="Selecione" />
+            </SelectTrigger>
+            <SelectContent side="bottom" avoidCollisions={false}>
+              {neighborhoods.map((n) => (
+                <SelectItem key={n} value={n}>
+                  {n}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="min-w-0">
+          <Label htmlFor="preco-maximo" className="mb-1.5 block text-xs font-medium">
+            Preço máximo (R$)
           </Label>
           <Input
-            id="local"
+            id="preco-maximo"
+            inputMode="numeric"
             className="h-11"
-            placeholder="Cidade, bairro ou região"
-            value={filters.location}
-            onChange={(e) => update("location", e.target.value)}
+            placeholder="Ex: 500000"
+            value={filters.priceMax}
+            onChange={(e) => update("priceMax", e.target.value.replace(/\D/g, ""))}
           />
-        </div>
-
-        <div className="min-w-0">
-          <span className="mb-1.5 block text-xs font-medium">Faixa de preço (R$)</span>
-          <div className="flex gap-2">
-            <Input
-              aria-label="Preço mínimo"
-              inputMode="numeric"
-              className="h-11"
-              placeholder="Mín."
-              value={filters.priceMin}
-              onChange={(e) => update("priceMin", e.target.value.replace(/\D/g, ""))}
-            />
-            <Input
-              aria-label="Preço máximo"
-              inputMode="numeric"
-              className="h-11"
-              placeholder="Máx."
-              value={filters.priceMax}
-              onChange={(e) => update("priceMax", e.target.value.replace(/\D/g, ""))}
-            />
-          </div>
-        </div>
-
-        <div className="min-w-0">
-          <Label htmlFor="quartos" className="mb-1.5 flex items-center gap-1.5 text-xs">
-            <BedDouble className="size-3.5 text-muted-foreground" aria-hidden="true" /> Quartos
-          </Label>
-          <select
-            id="quartos"
-            className={selectClass}
-            value={filters.bedrooms}
-            onChange={(e) => update("bedrooms", e.target.value as SearchFilters["bedrooms"])}
-          >
-            <option value="">Indiferente</option>
-            <option value="1">1+</option>
-            <option value="2">2+</option>
-            <option value="3">3+</option>
-            <option value="4">4+</option>
-          </select>
         </div>
       </div>
 
@@ -184,7 +212,7 @@ export function SearchForm() {
         className="mt-5 w-full lg:w-auto lg:min-w-56"
       >
         {loading ? <Loader2 className="animate-spin" /> : <Search />}
-        {loading ? "Buscando..." : "Encontrar imóveis"}
+        {loading ? "Buscando..." : "Buscar"}
       </Button>
 
       <div aria-live="polite" className="mt-3 text-sm">
