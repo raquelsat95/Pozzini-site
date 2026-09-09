@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { SearchForm } from "./SearchForm";
 
-const HERO_VIDEO_URL = "https://pozzyni.vercel.app/hero-video.mp4";
+const HERO_VIDEO_URL = "/hero-video.mp4";
 
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
